@@ -48,3 +48,11 @@ Fonctionnalité: Calculer le prix d'un panier avec différents livres Harry Pott
     Etant donné 1 du "troisieme" livre
     Quand on calcule le prix
     Alors le total est égal à 21.60€
+
+  Scénario: 20% de réduction pour 4 livres différents
+    Etant donné 1 du "premier" livre
+    Etant donné 1 du "deuxieme" livre
+    Etant donné 1 du "troisieme" livre
+    Etant donné 1 du "quatrieme" livre
+    Quand on calcule le prix
+    Alors le total est égal à 25.60€
