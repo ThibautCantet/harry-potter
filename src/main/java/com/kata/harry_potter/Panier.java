@@ -1,26 +1,27 @@
 package com.kata.harry_potter;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.IntStream;
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class Panier {
-    private final List<Livre> livres;
+    private final Map<Livre, Integer> livres;
 
     public Panier() {
-        livres = new ArrayList<>();
+        livres = new HashMap<>();
     }
 
-    public float computePrice() {
+    public double computePrice() {
         if (livres.isEmpty()) {
             return 0;
         } else {
-            return livres.stream().count() * Livre.PRIX;
+            Integer nombreTotalDeLivres = livres.values().stream()
+                    .reduce(Integer::sum).orElse(0);
+            return nombreTotalDeLivres * Livre.PRIX;
         }
     }
 
     public void ajouter(int quantite, Livre livre) {
-        IntStream.range(0, quantite).forEach(x -> livres.add(livre));
+        livres.put(livre, quantite);
     }
 }
