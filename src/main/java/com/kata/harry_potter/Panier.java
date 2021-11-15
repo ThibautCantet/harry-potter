@@ -16,7 +16,10 @@ public class Panier {
             return 0;
         } else {
             double discount = 1;
-            if (livres.keySet().size() > 1) {
+            if (livres.keySet().size() == 3) {
+                discount = 0.9;
+            }
+            if (livres.keySet().size() == 2) {
                 discount = 0.95;
             }
 
