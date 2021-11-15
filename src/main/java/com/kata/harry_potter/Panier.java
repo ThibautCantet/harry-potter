@@ -16,7 +16,7 @@ public class Panier {
         if (livres.isEmpty()) {
             return 0;
         } else {
-            return Livre.PRIX;
+            return livres.stream().count() * Livre.PRIX;
         }
     }
 
