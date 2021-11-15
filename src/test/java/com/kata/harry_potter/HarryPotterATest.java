@@ -8,7 +8,7 @@ import static org.assertj.core.api.Assertions.*;
 
 public class HarryPotterATest {
 
-    private float result;
+    private double result;
     private Panier panier = new Panier();
 
     @Etantdonné("pas de livre")
@@ -27,8 +27,8 @@ public class HarryPotterATest {
         result = panier.computePrice();
     }
 
-    @Alors("le total est égal à {int}€")
-    public void leTotalEstÉgalÀ€(int total) {
+    @Alors("le total est égal à {double}€")
+    public void leTotalEstÉgalÀ€(double total) {
         assertThat(result).isEqualTo(total);
     }
 }

@@ -15,9 +15,14 @@ public class Panier {
         if (livres.isEmpty()) {
             return 0;
         } else {
+            double discount = 1;
+            if (livres.keySet().size() > 1) {
+                discount = 0.95;
+            }
+
             Integer nombreTotalDeLivres = livres.values().stream()
                     .reduce(Integer::sum).orElse(0);
-            return nombreTotalDeLivres * Livre.PRIX;
+            return nombreTotalDeLivres * Livre.PRIX * discount;
         }
     }
 

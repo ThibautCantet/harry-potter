@@ -35,3 +35,9 @@ Fonctionnalité: Calculer le prix d'un panier avec différents livres Harry Pott
     Etant donné 3 du "cinquieme" livre
     Quand on calcule le prix
     Alors le total est égal à 24€
+
+  Scénario: 5% de réduction pour 2 livres différents
+    Etant donné 1 du "premier" livre
+    Etant donné 1 du "deuxieme" livre
+    Quand on calcule le prix
+    Alors le total est égal à 15.20€
