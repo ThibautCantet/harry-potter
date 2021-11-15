@@ -9,7 +9,8 @@ public class Panier {
             1, 1d,
             2, 0.95,
             3, 0.9,
-            4, 0.8
+            4, 0.8,
+            5, 0.75
     );
 
     private final Map<Livre, Integer> livres;
