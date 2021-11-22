@@ -28,38 +28,32 @@ public class Panier {
         } else {
             double prixTotal = 0;
 
-            Integer nombreDeLots = Collections.max(livres.values());
+            Integer nombreDeGroupeDeLivres = Collections.max(livres.values());
 
-            for (int i = 1; i <= nombreDeLots; i++) {
-                AtomicInteger nombreDeLivres = new AtomicInteger(0);
-                int nombreDeLotCourant = i;
-                livres.keySet()
-                       .stream()
-                       .forEach(livre -> {
-                           int nombreDeLivresCourant = livres.getOrDefault(livre, 0);
-                           if (nombreDeLivresCourant  >= nombreDeLotCourant) {
-                               nombreDeLivres.getAndIncrement();
-                           }
-                       });
+            for (int numeroDeGroupe = 1; numeroDeGroupe <= nombreDeGroupeDeLivres; numeroDeGroupe++) {
+                Integer nombreDeLivresDansLeGroupe = compterNombreDeLivreDansLeGroupe(numeroDeGroupe);
 
-                /***
-                 * lot 1 : premier + deuxieme => 5%
-                 * lot 2 : premier
-                 */
+                double discount = DISCOUNT_RULES.getOrDefault(nombreDeLivresDansLeGroupe, 1d);
 
-                double discountCourant = DISCOUNT_RULES.getOrDefault(nombreDeLivres.get(), 1d);
+                double prixGroupeCourant = nombreDeLivresDansLeGroupe * Livre.PRIX * discount;
 
-                double prixLotCourant = nombreDeLivres.get() * Livre.PRIX * discountCourant;
-
-                prixTotal += prixLotCourant;
+                prixTotal += prixGroupeCourant;
             }
             return prixTotal;
         }
     }
 
-    private Integer getNombreTotalDeLivres() {
-        return livres.values().stream()
-                .reduce(Integer::sum).orElse(0);
+    private Integer compterNombreDeLivreDansLeGroupe(int numeroGroupeDeLivresCourant) {
+        AtomicInteger nombreDeLivres = new AtomicInteger(0);
+        livres.keySet()
+               .stream()
+               .forEach(livre -> {
+                   int nombreDeLivresCourant = livres.getOrDefault(livre, 0);
+                   if (nombreDeLivresCourant  >= numeroGroupeDeLivresCourant) {
+                       nombreDeLivres.getAndIncrement();
+                   }
+               });
+        return nombreDeLivres.get();
     }
 
     public void ajouter(int quantite, Livre livre) {
