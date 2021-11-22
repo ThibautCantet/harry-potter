@@ -1,7 +1,9 @@
 package com.kata.harry_potter;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 
 
 public class Panier {
@@ -24,9 +26,34 @@ public class Panier {
         if (livres.isEmpty()) {
             return 0;
         } else {
-            double discount = DISCOUNT_RULES.get(livres.keySet().size());
-            Integer nombreTotalDeLivres = getNombreTotalDeLivres();
-            return nombreTotalDeLivres * Livre.PRIX * discount;
+            double prixTotal = 0;
+
+            Integer nombreDeLots = Collections.max(livres.values());
+
+            for (int i = 1; i <= nombreDeLots; i++) {
+                AtomicInteger nombreDeLivres = new AtomicInteger(0);
+                int nombreDeLotCourant = i;
+                livres.keySet()
+                       .stream()
+                       .forEach(livre -> {
+                           int nombreDeLivresCourant = livres.getOrDefault(livre, 0);
+                           if (nombreDeLivresCourant  >= nombreDeLotCourant) {
+                               nombreDeLivres.getAndIncrement();
+                           }
+                       });
+
+                /***
+                 * lot 1 : premier + deuxieme => 5%
+                 * lot 2 : premier
+                 */
+
+                double discountCourant = DISCOUNT_RULES.getOrDefault(nombreDeLivres.get(), 1d);
+
+                double prixLotCourant = nombreDeLivres.get() * Livre.PRIX * discountCourant;
+
+                prixTotal += prixLotCourant;
+            }
+            return prixTotal;
         }
     }
 
