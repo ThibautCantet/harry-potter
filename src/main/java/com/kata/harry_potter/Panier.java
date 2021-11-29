@@ -3,6 +3,7 @@ package com.kata.harry_potter;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 
 
@@ -45,15 +46,20 @@ public class Panier {
 
     private Integer compterNombreDeLivreDansLeGroupe(int numeroGroupeDeLivresCourant) {
         AtomicInteger nombreDeLivres = new AtomicInteger(0);
-        livres.keySet()
-               .stream()
+        Set<Livre> livresDuPanier = livres.keySet();
+        livresDuPanier
                .forEach(livre -> {
-                   int nombreDeLivresCourant = livres.getOrDefault(livre, 0);
-                   if (nombreDeLivresCourant  >= numeroGroupeDeLivresCourant) {
+                   boolean livreAjoutableDansLeGroupe = livreAjoutableDansLeGroupe(numeroGroupeDeLivresCourant, livre);
+                   if (livreAjoutableDansLeGroupe) {
                        nombreDeLivres.getAndIncrement();
                    }
                });
         return nombreDeLivres.get();
+    }
+
+    private boolean livreAjoutableDansLeGroupe(int numeroGroupeDeLivresCourant, Livre livre) {
+        int nombreDeLivresCourant = livres.getOrDefault(livre, 0);
+        return nombreDeLivresCourant >= numeroGroupeDeLivresCourant;
     }
 
     public void ajouter(int quantite, Livre livre) {
