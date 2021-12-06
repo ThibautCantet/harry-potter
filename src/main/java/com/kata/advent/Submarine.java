@@ -3,6 +3,10 @@ package com.kata.advent;
 import java.util.List;
 
 public class Submarine {
+
+    private int horizontalPosition = 0;
+    private int depth = 0;
+
     public int count(List<Integer> measurements) {
 
         int count = 0;
@@ -13,5 +17,31 @@ public class Submarine {
         }
 
         return count;
+    }
+
+    public int getHorizontalPosition() {
+        return horizontalPosition;
+    }
+
+    public int getDepth() {
+        return depth;
+    }
+
+    public void command(List<Command> commands) {
+        for (Command command:
+             commands) {
+            if (command instanceof Forward) {
+                horizontalPosition += command.value();
+            } else if (command instanceof Down) {
+                depth += command.value();
+            } else {
+                depth -= command.value();
+                depth = Math.max(depth, 0);
+            }
+        }
+    }
+
+    public int getDive() {
+        return depth * horizontalPosition;
     }
 }

@@ -12,6 +12,12 @@ class SubmarineUTest {
 
     private final Submarine submarine = new Submarine();
 
+    @Test
+    void constructor_should_initialize_x_and_y_position_to_0_0() {
+        assertThat(submarine.getHorizontalPosition()).isZero();
+        assertThat(submarine.getDepth()).isZero();
+    }
+
     @Nested
     class CountShouldReturn {
         @Test
@@ -40,6 +46,55 @@ class SubmarineUTest {
             int count = submarine.count(asList(0, 1, 3));
 
             assertThat(count).isEqualTo(2);
+        }
+    }
+
+    @Nested
+    class Command {
+        @Test
+        void forward_should_increase_horizontalPosition() {
+            submarine.command(List.of(new Forward(4), new Forward(2)));
+
+            assertThat(submarine.getHorizontalPosition()).isEqualTo(6);
+            assertThat(submarine.getDepth()).isZero();
+        }
+
+        @Test
+        void down_should_increase_depth() {
+            submarine.command(List.of(new Down(4), new Down(2)));
+
+            assertThat(submarine.getHorizontalPosition()).isZero();
+            assertThat(submarine.getDepth()).isEqualTo(6);
+        }
+
+        @Test
+        void up_should_increase_depth() {
+            submarine.command(List.of(new Down(4), new Up(2), new Up(2)));
+
+            assertThat(submarine.getHorizontalPosition()).isZero();
+            assertThat(submarine.getDepth()).isZero();
+        }
+
+        @Test
+        void up_should_not_increase_depth_greater_than_0() {
+            submarine.command(List.of(new Down(4), new Up(2), new Up(3)));
+
+            assertThat(submarine.getHorizontalPosition()).isZero();
+            assertThat(submarine.getDepth()).isZero();
+        }
+
+        @Test
+        void dive_should_return_depth_multply_by_horizontalPosition() {
+            submarine.command(List.of(
+                    new Forward(5),
+                    new Down(5),
+                    new Forward(8),
+                    new Up(3),
+                    new Down(8),
+                    new Forward(2)
+            ));
+
+            assertThat(submarine.getDive()).isEqualTo(150);
         }
     }
 }
