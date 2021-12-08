@@ -6,6 +6,7 @@ public class Submarine {
 
     private int horizontalPosition = 0;
     private int depth = 0;
+    private byte gamma;
 
     public int count(List<Integer> measurements) {
 
@@ -43,5 +44,15 @@ public class Submarine {
 
     public int getDive() {
         return depth * horizontalPosition;
+    }
+
+    public void diagnosis(byte [] report) {
+        for (byte line :
+                report) {
+        }
+    }
+
+    public byte getGamma() {
+        return gamma;
     }
 }
