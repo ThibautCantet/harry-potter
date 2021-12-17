@@ -1,5 +1,6 @@
 package com.kata.advent;
 
+import java.util.Collection;
 import java.util.List;
 
 import org.junit.jupiter.api.Nested;
@@ -84,7 +85,7 @@ class SubmarineUTest {
         }
 
         @Test
-        void dive_should_return_depth_multply_by_horizontalPosition() {
+        void dive_should_return_depth_multiply_by_horizontalPosition() {
             submarine.command(List.of(
                     new Forward(5),
                     new Down(5),
@@ -103,23 +104,40 @@ class SubmarineUTest {
     class Consumption {
         @Test
         void gammaRate_should_count_max_digits() {
-            submarine.diagnosis(new byte[]{
-                            0b00100,
-                            0b11110,
-                            0b10110,
-                            0b10111,
-                            0b10101,
-                            0b01111,
-                            0b00111,
-                            0b11100,
-                            0b10000,
-                            0b11001,
-                            0b00010,
-                            0b01010
-                    }
-            );
+            submarine.diagnosis(List.of(
+                            "00100",
+                            "11110",
+                            "10110",
+                            "10111",
+                            "10101",
+                            "01111",
+                            "00111",
+                            "11100",
+                            "10000",
+                            "11001",
+                            "00010",
+                            "01010"));
 
-            assertThat(submarine.getGamma()).isEqualTo(0b10110);
+            assertThat(submarine.getGamma()).isEqualTo(22);
+        }
+
+        @Test
+        void epsilonRate_should_count_max_digits() {
+            submarine.diagnosis(List.of(
+                            "00100",
+                            "11110",
+                            "10110",
+                            "10111",
+                            "10101",
+                            "01111",
+                            "00111",
+                            "11100",
+                            "10000",
+                            "11001",
+                            "00010",
+                            "01010"));
+
+            assertThat(submarine.getEpsilon()).isEqualTo(9);
         }
     }
 }
