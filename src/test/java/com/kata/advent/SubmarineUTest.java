@@ -103,41 +103,22 @@ class SubmarineUTest {
     @Nested
     class Consumption {
         @Test
-        void gammaRate_should_count_max_digits() {
-            submarine.diagnosis(List.of(
-                            "00100",
-                            "11110",
-                            "10110",
-                            "10111",
-                            "10101",
-                            "01111",
-                            "00111",
-                            "11100",
-                            "10000",
-                            "11001",
-                            "00010",
-                            "01010"));
+        void should_equal_gamma_multiply_by_epsilon() {
+            int consumption = submarine.diagnosis(List.of(
+                    "00100",
+                    "11110",
+                    "10110",
+                    "10111",
+                    "10101",
+                    "01111",
+                    "00111",
+                    "11100",
+                    "10000",
+                    "11001",
+                    "00010",
+                    "01010"));
 
-            assertThat(submarine.getGamma()).isEqualTo(22);
-        }
-
-        @Test
-        void epsilonRate_should_count_max_digits() {
-            submarine.diagnosis(List.of(
-                            "00100",
-                            "11110",
-                            "10110",
-                            "10111",
-                            "10101",
-                            "01111",
-                            "00111",
-                            "11100",
-                            "10000",
-                            "11001",
-                            "00010",
-                            "01010"));
-
-            assertThat(submarine.getEpsilon()).isEqualTo(9);
+            assertThat(consumption).isEqualTo(198);
         }
     }
 }

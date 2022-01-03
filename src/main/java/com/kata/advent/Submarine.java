@@ -6,8 +6,6 @@ public class Submarine {
 
     private int horizontalPosition = 0;
     private int depth = 0;
-    private int gamma;
-    private int epsilon;
 
     public int count(List<Integer> measurements) {
 
@@ -47,16 +45,15 @@ public class Submarine {
         return depth * horizontalPosition;
     }
 
-    public void diagnosis(List<String> report) {
+    public int diagnosis(List<String> report) {
         Integer[] columnSums = computeColumnSums(report);
 
         Diagnosis diagnosis = new Diagnosis(columnSums, report.size());
 
-        this.gamma = diagnosis.gamma;
-        this.epsilon = diagnosis.epsilon;
+        return diagnosis.gamma * diagnosis.epsilon;
     }
 
-    class Diagnosis {
+    private class Diagnosis {
         int gamma;
         int epsilon;
 
@@ -102,13 +99,5 @@ public class Submarine {
             columns[i] = 0;
         }
         return columns;
-    }
-
-    public int getGamma() {
-        return gamma;
-    }
-
-    public int getEpsilon() {
-        return epsilon;
     }
 }
